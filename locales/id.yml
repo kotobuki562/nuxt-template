@@ -18,6 +18,10 @@ pages:
     nav: pos
     title: pos
     description: ini adalah halaman posting
+  todo:
+    nav: todo
+    title: todo
+    description: ini adalah halaman todo
   test:
     nav: uji
     title: pengujian

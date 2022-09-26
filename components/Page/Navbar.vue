@@ -25,6 +25,11 @@ const menus = computed((): IMenuItem[] => [
     text: t('pages.dashboard.nav'),
     route: { name: 'dashboard' },
   },
+  {
+    type: 'button',
+    text: t('pages.todo.nav'),
+    route: { name: 'todo' },
+  },
 ])
 </script>
 

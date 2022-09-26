@@ -18,6 +18,10 @@ pages:
     nav: 役職
     title: 役職
     description: これは投稿ページです
+  todo:
+    nav: すること
+    title: すること
+    description: これはtodoページです
   test:
     nav: テスト
     title: テスト

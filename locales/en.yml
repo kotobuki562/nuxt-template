@@ -18,6 +18,10 @@ pages:
     nav: post
     title: post
     description: this is a post page
+  todo:
+    nav: todo
+    title: todo
+    description: this is a todo page
   test:
     nav: test
     title: testing
