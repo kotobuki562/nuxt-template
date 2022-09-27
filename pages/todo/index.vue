@@ -1,9 +1,20 @@
 <script lang="ts" setup>
 import { capitalize } from '~/utils/str'
-import { useTodo } from '~/stores/todo'
+import { useNewTodo, useTodo } from '~/stores/todo'
+
 // composable
 const { t } = useLang()
-const todos = useTodo()
+const todoState = useTodo()
+const newTodo = useNewTodo()
+const onCreateTodo = () => {
+  todoState.add({
+    id: todoState.todos.length + 1,
+    title: newTodo.title,
+    content: newTodo.content,
+    completed: false,
+    createdAt: new Date(),
+  })
+}
 
 // compiler macro
 definePageMeta({
@@ -26,8 +37,34 @@ useHead(() => ({
       <PageTitle :text="$t('pages.todo.title')" class="capitalize" />
     </PageHeader>
     <PageBody>
-      <div v-for="todo in todos" :key="todo.id">
-        <p>{{ todo.title }}</p>
+      <FormTextInput
+        v-model="newTodo.title"
+        placeholder="Title"
+        size="md"
+        class="w-full md:w-1/3"
+      />
+      <FormTextInput
+        v-model="newTodo.content"
+        placeholder="Content"
+        size="md"
+        class="w-full md:w-1/3"
+      />
+      <Button
+        class="capitalize w-full md:w-auto"
+        text="Add Todo"
+        type="secondary"
+        size="md"
+        @click.prevent="onCreateTodo"
+      />
+
+      <div v-if="todoState.todos.length > 0">
+        <div v-for="todo in todoState.todos" :key="todo.id">
+          <p>{{ todo.id }}</p>
+          <p>{{ todo.title }}</p>
+          <p>{{ todo.content }}</p>
+          <!-- todo.completedがtrueなら"完了"、falseなら未完了 -->
+          <p>{{ todo.completed ? '完了' : '未完了' }}</p>
+        </div>
       </div>
     </PageBody>
   </PageWrapper>
