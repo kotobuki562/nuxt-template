@@ -7,23 +7,34 @@ export interface Todo {
   content: string
 }
 
+export const useNewTodo = defineStore('newTodo', {
+  state: (): Todo => ({
+    id: 0,
+    title: '',
+    completed: false,
+    content: '',
+  }),
+})
+
 export const useTodo = defineStore('todo', {
-  state: (): Todo[] => [],
+  state: () => ({
+    todos: [] as Todo[],
+  }),
   actions: {
     add(todo: Todo) {
-      this.push(todo)
+      this.todos.push(todo)
     },
     remove(todo: Todo) {
-      const index = this.findIndex((t) => t.id === todo.id)
-      this.splice(index, 1)
+      const index = this.todos.findIndex((t) => t.id === todo.id)
+      this.todos.splice(index, 1)
     },
     toggle(todo: Todo) {
-      const index = this.findIndex((t) => t.id === todo.id)
-      this[index].completed = !this[index].completed
+      const index = this.todos.findIndex((t) => t.id === todo.id)
+      this.todos[index].completed = !this.todos[index].completed
     },
     update(todo: Todo) {
-      const index = this.findIndex((t) => t.id === todo.id)
-      this[index] = todo
+      const index = this.todos.findIndex((t) => t.id === todo.id)
+      this.todos[index] = todo
     },
   },
 })
