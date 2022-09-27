@@ -5,6 +5,7 @@ export interface Todo {
   title: string
   completed: boolean
   content: string
+  createdAt: Date
 }
 
 export const useNewTodo = defineStore('newTodo', {
@@ -13,6 +14,7 @@ export const useNewTodo = defineStore('newTodo', {
     title: '',
     completed: false,
     content: '',
+    createdAt: new Date(),
   }),
 })
 

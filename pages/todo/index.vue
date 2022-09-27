@@ -12,6 +12,7 @@ const onCreateTodo = () => {
     title: newTodo.title,
     content: newTodo.content,
     completed: false,
+    createdAt: new Date(),
   })
 }
 
@@ -36,11 +37,25 @@ useHead(() => ({
       <PageTitle :text="$t('pages.todo.title')" class="capitalize" />
     </PageHeader>
     <PageBody>
-      <form @submit.prevent="onCreateTodo" data-testid="add-items">
-        <input type="text" v-model="newTodo.title" />
-        <input type="text" v-model="newTodo.content" />
-        <button type="submit">Add</button>
-      </form>
+      <FormTextInput
+        v-model="newTodo.title"
+        placeholder="Title"
+        size="md"
+        class="w-full md:w-1/3"
+      />
+      <FormTextInput
+        v-model="newTodo.content"
+        placeholder="Content"
+        size="md"
+        class="w-full md:w-1/3"
+      />
+      <Button
+        class="capitalize w-full md:w-auto"
+        text="Add Todo"
+        type="secondary"
+        size="md"
+        @click.prevent="onCreateTodo"
+      />
 
       <div v-if="todoState.todos.length > 0">
         <div v-for="todo in todoState.todos" :key="todo.id">
