@@ -14,6 +14,15 @@ const onCreateTodo = () => {
     completed: false,
     createdAt: new Date(),
   })
+  newTodo.reset()
+}
+
+const onRemoveTodo = (id: number) => {
+  todoState.remove(id)
+}
+
+const onToggleTodo = (id: number) => {
+  todoState.toggle(id)
 }
 
 // compiler macro
@@ -59,11 +68,15 @@ useHead(() => ({
 
       <div v-if="todoState.todos.length > 0">
         <div v-for="todo in todoState.todos" :key="todo.id">
-          <p>{{ todo.id }}</p>
-          <p>{{ todo.title }}</p>
-          <p>{{ todo.content }}</p>
-          <!-- todo.completedがtrueなら"完了"、falseなら未完了 -->
-          <p>{{ todo.completed ? '完了' : '未完了' }}</p>
+          <TodoContent
+            :id="todo.id"
+            :title="todo.title"
+            :content="todo.content"
+            :created-at="new Date(todo.createdAt)"
+            :computed="todo.completed"
+            @remove="onRemoveTodo"
+            @toggle="onToggleTodo"
+          />
         </div>
       </div>
     </PageBody>
