@@ -49,10 +49,6 @@ export const useTodo = defineStore('todo', {
       const index = this.todos.findIndex((t) => t.id === todoId)
       this.todos.splice(index, 1)
     },
-    toggle(todoId: Todo['id']) {
-      const index = this.todos.findIndex((t) => t.id === todoId)
-      this.todos[index].completed = !this.todos[index].completed
-    },
     update(todo: Todo) {
       const index = this.todos.findIndex((t) => t.id === todo.id)
       this.todos[index] = todo

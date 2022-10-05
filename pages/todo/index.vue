@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { capitalize } from '~/utils/str'
-import { useNewTodo, useTodo } from '~/stores/todo'
+import { Todo, useNewTodo, useTodo } from '~/stores/todo'
 
 // composable
 const { t } = useLang()
@@ -21,10 +21,9 @@ const onRemoveTodo = (id: number) => {
   todoState.remove(id)
 }
 
-const onToggleTodo = (id: number) => {
-  todoState.toggle(id)
+const onUpdateTodo = (todo: Todo) => {
+  todoState.update(todo)
 }
-
 // compiler macro
 definePageMeta({
   layout: 'page',
@@ -61,7 +60,7 @@ useHead(() => ({
       <Button
         class="capitalize w-full md:w-auto"
         text="Add Todo"
-        type="secondary"
+        type="primary"
         size="md"
         @click.prevent="onCreateTodo"
       />
@@ -73,9 +72,9 @@ useHead(() => ({
             :title="todo.title"
             :content="todo.content"
             :created-at="new Date(todo.createdAt)"
-            :computed="todo.completed"
+            :completed="todo.completed"
             @remove="onRemoveTodo"
-            @toggle="onToggleTodo"
+            @update="onUpdateTodo"
           />
         </div>
       </div>
