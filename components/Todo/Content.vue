@@ -38,6 +38,17 @@ const props = defineProps({
   },
 })
 
+const todoStyles = reactive<{
+  [key: string]: string
+}>({
+  isCompleted: 'bg-gray-200 dark:bg-slate-800',
+  unCompleted: 'bg-white dark:bg-slate-900',
+})
+
+const selectedLabelStyle = computed(() => {
+  return props.completed ? todoStyles.isCompleted : todoStyles.unCompleted
+})
+
 const isEdit = ref(false)
 
 const onToggleEdit = () => {
@@ -72,11 +83,11 @@ onMounted(() => {
 
 <template>
   <div
-    class="bg-gray-200 dark:bg-slate-800 bg-gradient-to-r shadow-white/50 dark:shadow-slate-900/50 px-6 py-6 rounded-md shadow-lg flex space-x-6"
+    :class="`bg-gradient-to-r shadow-white/50 dark:shadow-slate-900/50 px-6 py-6 rounded-md shadow-lg flex space-x-6 ${selectedLabelStyle}`"
   >
     <div class="flex items-center justify-center">
       <slot v-if="props.completed" name="icon">
-        <IconMdi:checkCircle :class="`text-2xl `" />
+        <IconMdi:checkCircle :class="`text-2xl text-green-500`" />
       </slot>
       <slot v-else name="icon">
         <icon-bi:exclamation-circle-fill :class="`text-2xl `" />
@@ -115,9 +126,14 @@ onMounted(() => {
       </div>
     </div>
     <div v-else class="flex-1">
-      <div :class="`font-bold text-lg mb-0.5`">
+      <NuxtLink
+        tag="a"
+        :to="`/todo/${props.id}`"
+        class="font-bold text-lg mb-0.5"
+      >
         <slot name="title">{{ props.title }}</slot>
-      </div>
+      </NuxtLink>
+
       <div class="text-gray-700 dark:text-gray-100">
         <slot name="title">{{ props.content }}</slot>
       </div>
