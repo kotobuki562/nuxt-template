@@ -37,6 +37,23 @@ useHead(() => ({
     },
   ],
 }))
+
+onMounted(async () => {
+  const todo = await fetch('https://jsonplaceholder.typicode.com/todos').then(
+    (res) => {
+      return res.json()
+    }
+  )
+  for (const t of todo) {
+    todoState.add({
+      id: t.id,
+      title: t.title,
+      content: t.body,
+      completed: t.completed,
+      createdAt: new Date(),
+    })
+  }
+})
 </script>
 
 <template>
