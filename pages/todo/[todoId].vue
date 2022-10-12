@@ -6,6 +6,7 @@ definePageMeta({
 
 <template>
   <PageWrapper class="flex flex-col">
-    <PageTodoDoc />
+    <!-- <PageTodoDoc /> -->
+    <PageTodoContent :todo-id="`${$route.params.todoId}`" />
   </PageWrapper>
 </template>

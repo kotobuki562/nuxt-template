@@ -6,18 +6,20 @@ const props = defineProps({
   },
 })
 
-onMounted(async () => {
-  const todo = await fetch(
-    `https://jsonplaceholder.typicode.com/todos/${props.todoId}`
-  ).then((res) => {
-    return res.json()
-  })
-  console.info(todo)
-})
+// `https://jsonplaceholder.typicode.com/todos/${props.todoId}`にfetchしてtodoを取得する
+const { data } = await useAsyncData(
+  `https://jsonplaceholder.typicode.com/todos/${props.todoId}`,
+  () =>
+    fetch(`https://jsonplaceholder.typicode.com/todos/${props.todoId}`).then(
+      (res) => res.json()
+    )
+)
+
+console.info(data.value)
 </script>
 
 <template>
   <div>
-    {{ todo.title }}
+    {{ data?.title }}
   </div>
 </template>
